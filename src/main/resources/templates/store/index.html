@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+        .profile a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .profile a:hover {
+            text-decoration: underline;
+        }
+        .search-bar {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .search-bar input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .search-bar input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 80%;
+            margin: 20px 0;
+        }
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+        }
+        .product-card img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-card h3 {
+            margin: 10px 0;
+        }
+        .product-card p {
+            color: #666;
+        }
+        .product-card .price {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to Our Online Shop</h1>
+    <div class="profile">
+        <!-- Если пользователь авторизован -->
+        <div th:if="${isAuthenticated}">
+            <p>Welcome, <strong th:text="${person.getName()}">User</strong></p>
+            <a href="/profile">Profile</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div th:if="${!isAuthenticated}">
+            <a href="/auth/login">Login</a>
+            <a href="/auth/registration">Register</a>
+        </div>
+    </div>
+</header>
+
+<div class="search-bar">
+    <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="Search for products...">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<div class="product-grid">
+    <!-- Цикл по продуктам -->
+    <div class="product-card" th:each="item : ${items}">
+        <img th:src="@{/img/{imgUrl}(imgUrl=${item.getImgUrl()})}" alt="Product Image">
+        <h3 th:text="${item.getTitle()}">Product Name</h3>
+        <p class="price" th:text="${item.getPrice()}">Product Price</p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2024 Online Shop. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
