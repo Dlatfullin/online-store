@@ -42,11 +42,6 @@ public class StoreController {
             model.addAttribute("person", person);
         }
 
-        List<Item> items = itemsService.getAllItems();
-        for(Item item : items) {
-            System.out.println(item.getImgUrl());
-        }
-
         return "store/index";
     }
 }

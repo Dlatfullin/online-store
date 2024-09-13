@@ -25,6 +25,7 @@ public class RegistrationService {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setCreatedAt(new Date());
         person.setRole("ROLE_USER");
+        person.setBalance(0.0);
         peopleRepository.save(person);
     }
 }

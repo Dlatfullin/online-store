@@ -21,13 +21,16 @@ public class Person {
 
     @Column(name = "name")
     @Size(min = 2, max = 200, message = "name must be between 2 and 200 symbols")
+    @NotEmpty(message = "name can not be empty")
     private String name;
 
     @Column(name = "surname")
+    @NotEmpty(message = "surname can not be empty")
     private String surname;
 
     @Column(name = "email")
     @Email
+    @NotEmpty(message = "email can not be empty")
     private String email;
 
     @Column(name = "username", unique = true)

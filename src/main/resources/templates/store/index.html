@@ -38,6 +38,18 @@
         .profile a:hover {
             text-decoration: underline;
         }
+        .cart-button {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+
+        .cart-button:hover {
+            background-color: #45a049;
+        }
         .search-bar {
             margin: 30px 0;
             text-align: center;
@@ -89,6 +101,21 @@
             font-weight: bold;
             color: #4CAF50;
         }
+        .add-to-cart {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #45a049;
+        }
+
         footer {
             margin-top: 40px;
             padding: 20px;
@@ -115,6 +142,8 @@
             <a href="/auth/login">Login</a>
             <a href="/auth/registration">Register</a>
         </div>
+
+        <a href="/cart" class="cart-button">Корзина</a>
     </div>
 </header>
 
@@ -131,6 +160,7 @@
         <img th:src="@{/img/{imgUrl}(imgUrl=${item.getImgUrl()})}" alt="Product Image">
         <h3 th:text="${item.getTitle()}">Product Name</h3>
         <p class="price" th:text="${item.getPrice()}">Product Price</p>
+        <button class="add-to-cart" th:data-item-id="${item.getId()}">В корзину</button>
     </div>
 </div>
 
