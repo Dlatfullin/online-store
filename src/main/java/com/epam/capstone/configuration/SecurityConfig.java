@@ -50,13 +50,16 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).
                 authorizeRequests(
-                authz -> authz.requestMatchers("/store", "/auth/**", "/img/**").permitAll()
+                authz -> authz.requestMatchers("/store/**", "/auth/**", "/img/**", "/cart/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(x -> x.loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")
                 .defaultSuccessUrl("/store", true)
                 .failureUrl("/auth/login?error"))
-                .logout(x -> x.logoutUrl("/logout").logoutSuccessUrl("/store"));
+                .logout(x -> x.logoutUrl("/logout").invalidateHttpSession(false)
+                        .deleteCookies("JSESSIONID")
+
+                        .logoutSuccessUrl("/store"));
         return http.build();
     }
 

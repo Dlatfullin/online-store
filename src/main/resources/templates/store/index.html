@@ -38,6 +38,10 @@
         .profile a:hover {
             text-decoration: underline;
         }
+        .profile span {
+            color: white;
+            margin-left: 20px;
+        }
         .cart-button {
             color: white;
             text-decoration: none;
@@ -46,7 +50,6 @@
             background-color: #4CAF50;
             border-radius: 5px;
         }
-
         .cart-button:hover {
             background-color: #45a049;
         }
@@ -84,6 +87,10 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 15px;
             text-align: center;
+            cursor: pointer;
+            position: relative;
+            text-decoration: none; /* Убирает подчеркивание ссылки */
+            color: inherit; /* Убирает цвет текста ссылки */
         }
         .product-card img {
             width: 50px;
@@ -111,11 +118,17 @@
             cursor: pointer;
             font-size: 16px;
         }
-
         .add-to-cart:hover {
             background-color: #45a049;
         }
-
+        .quantity-input {
+            width: 60px;
+            padding: 5px;
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
         footer {
             margin-top: 40px;
             padding: 20px;
@@ -134,16 +147,15 @@
         <!-- Если пользователь авторизован -->
         <div th:if="${isAuthenticated}">
             <p>Welcome, <strong th:text="${person.getName()}">User</strong></p>
+            <span>Balance: <strong th:text="${person.getBalance()}">0.0</strong></span>
             <a href="/profile">Profile</a>
             <a href="/logout">Logout</a>
         </div>
-
         <div th:if="${!isAuthenticated}">
             <a href="/auth/login">Login</a>
             <a href="/auth/registration">Register</a>
         </div>
-
-        <a href="/cart" class="cart-button">Корзина</a>
+        <a href="/cart" class="cart-button">Cart</a>
     </div>
 </header>
 
@@ -155,13 +167,16 @@
 </div>
 
 <div class="product-grid">
-    <!-- Цикл по продуктам -->
-    <div class="product-card" th:each="item : ${items}">
+    <a href="#" class="product-card" th:each="item : ${items}" th:href="@{/store/{id}(id=${item.getId()})}">
         <img th:src="@{/img/{imgUrl}(imgUrl=${item.getImgUrl()})}" alt="Product Image">
         <h3 th:text="${item.getTitle()}">Product Name</h3>
         <p class="price" th:text="${item.getPrice()}">Product Price</p>
-        <button class="add-to-cart" th:data-item-id="${item.getId()}">В корзину</button>
-    </div>
+        <form th:action="@{/cart/add}" th:method="POST" style="position: relative; z-index: 1;">
+            <input type="hidden" name="itemId" th:value="${item.getId()}" />
+            <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+            <button class="add-to-cart">Add to cart</button>
+        </form>
+    </a>
 </div>
 
 <footer>

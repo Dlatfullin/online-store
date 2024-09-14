@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .remove-button {
+            padding: 10px 20px;
+            background-color: #ff4d4d;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background-color: #ff1a1a;
+        }
+
+        a.continue-shopping {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        a.continue-shopping:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart.getItems()}">
+        <td th:text="${item.getItem().getTitle()}">Product Name</td>
+        <td th:text="${item.getQuantity()}">1</td>
+        <td th:text="${item.getItem().getPrice()}">0.00</td>
+        <td th:text="${item.getQuantity() * item.getItem().getPrice()}">0.00</td>
+        <td>
+            <form th:action="@{/cart/{itemId}(itemId = ${item.getItem().getId()})}" th:method="DELETE">
+                <button type="submit" class="remove-button">Remove</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/store" class="continue-shopping">Continue shopping</a>
+
+<footer>
+    <p>© 2024 Online Shop. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

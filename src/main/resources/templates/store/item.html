@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 60%;
+            padding: 20px;
+            margin: 40px 0;
+        }
+
+        .product-card img {
+            width: 25%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-info {
+            margin: 20px 0;
+        }
+
+        .product-info h2 {
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .product-info p {
+            color: #666;
+        }
+
+        .product-info .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .category {
+            color: #555;
+            font-style: italic;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .add-to-cart:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-card">
+    <img th:src="@{/img/{imgUrl}(imgUrl=${item.getImgUrl()})}" alt="Product Image">
+
+    <div class="product-info">
+
+        <h2 th:text="${item.getTitle()}">Product Name</h2>
+
+        <p th:text="${item.getDescription()}">Product Description</p>
+
+        <p class="price" th:text="${item.getPrice()}">0.00</p>
+
+        <p class="category">
+            Category: <span th:text="${item.getCategory().getName()}">Category Name</span>
+        </p>
+    </div>
+
+    <form th:action="@{/cart/add}" th:method="POST">
+        <input type="hidden" name="itemId" th:value="${item.getId()}" />
+        <input type="number" name="quantity" min="1" value="1" class="quantity-input" />
+        <button class="add-to-cart">Add to Cart</button>
+    </form>
+</div>
+
+</body>
+</html>
