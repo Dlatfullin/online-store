@@ -46,4 +46,13 @@ public class ProfileController {
         return "user/profile";
 
     }
+
+    @GetMapping("/history")
+    public String purchaseHistory(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Person person = peopleService.getPersonByUsername(authentication.getName()).get();
+
+        model.addAttribute("items", peopleService.getAllItems(person));
+        return "user/history";
+    }
 }

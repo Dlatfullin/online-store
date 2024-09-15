@@ -2,6 +2,7 @@ package com.epam.capstone.service;
 
 import com.epam.capstone.model.Item;
 import com.epam.capstone.repository.ItemsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +23,10 @@ public class ItemsService {
 
     public Item getItemById(Long id) {
         return itemsRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    public void updateItem(Item item) {
+        itemsRepository.save(item);
     }
 }

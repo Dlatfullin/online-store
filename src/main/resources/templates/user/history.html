@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .history-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+        .history-container h2 {
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .no-purchases {
+            text-align: center;
+            color: #888;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Online Shop</h1>
+    <div>
+        <a href="/store" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
+        <a href="/profile" style="color: white; text-decoration: none; margin-left: 20px;">Profile</a>
+        <a href="/logout" style="color: white; text-decoration: none; margin-left: 20px;">Logout</a>
+    </div>
+</header>
+
+<div class="history-container">
+    <h2>Purchase History</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.getItem().getTitle()}">Product Name</td>
+            <td th:text="${item.getQuantity()}">1</td>
+            <td th:text="${item.getItem().getPrice() * item.getQuantity()}">$0.00</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Show message if there are no purchases -->
+    <p class="no-purchases" th:if="${#lists.isEmpty(items)}">You have no purchase history.</p>
+</div>
+
+<footer>
+    <p>© 2024 Online Shop. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

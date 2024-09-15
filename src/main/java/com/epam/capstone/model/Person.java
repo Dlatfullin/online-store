@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class Person {
     private String role;
 
     @ManyToMany(mappedBy = "people")
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -125,5 +126,13 @@ public class Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

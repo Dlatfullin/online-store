@@ -2,6 +2,7 @@ package com.epam.capstone.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class Item {
     @JoinTable(name = "Person_Item",
     joinColumns = @JoinColumn(name = "item_id"),
     inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> people;
+    private List<Person> people = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")

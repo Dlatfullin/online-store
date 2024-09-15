@@ -50,7 +50,7 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable).
                 authorizeRequests(
-                authz -> authz.requestMatchers("/store/**", "/auth/**", "/img/**", "/cart/**").permitAll()
+                authz -> authz.requestMatchers("/store/**", "/auth/**", "/img/**", "/cart/**", "/purchase/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(x -> x.loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")

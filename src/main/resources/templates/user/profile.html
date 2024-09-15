@@ -60,6 +60,12 @@
         .profile-container button:hover {
             background-color: #45a049;
         }
+        .button-secondary {
+            background-color: #008CBA;
+        }
+        .button-secondary:hover {
+            background-color: #007bb5;
+        }
         footer {
             margin-top: 40px;
             padding: 20px;
@@ -101,6 +107,11 @@
         <input type="email" id="email" name="email" value="" th:field="*{email}">
 
         <button type="submit">Update Profile</button>
+    </form>
+
+    <!-- Purchase history button -->
+    <form th:action="@{/profile/history}" th:method="GET" style="margin-top: 10px;">
+        <button type="submit" class="button-secondary">View Purchase History</button>
     </form>
 </div>
 

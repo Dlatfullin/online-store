@@ -60,6 +60,32 @@
             background-color: #ff1a1a;
         }
 
+        .buy-button, .login-button {
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .buy-button {
+            background-color: #4CAF50;
+        }
+
+        .buy-button:hover {
+            background-color: #45a049;
+        }
+
+        .login-button {
+            background-color: #007BFF;
+        }
+
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+
         a.continue-shopping {
             text-decoration: none;
             padding: 10px 20px;
@@ -71,6 +97,15 @@
 
         a.continue-shopping:hover {
             background-color: #45a049;
+        }
+
+        .total-row td {
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-weight: bold;
         }
 
         footer {
@@ -110,9 +145,32 @@
         </td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr class="total-row">
+        <td colspan="3">Total:</td>
+        <td th:text="${total}">0.00</td>
+        <td></td>
+    </tr>
+    </tfoot>
 </table>
 
 <a href="/store" class="continue-shopping">Continue shopping</a>
+
+<div>
+    <th:block th:if="${isAuthenticated}">
+        <form th:action="@{/purchase/buy}" th:method="PUT">
+            <button type="submit" class="buy-button">Buy Now</button>
+        </form>
+    </th:block>
+    <th:block th:unless="${isAuthenticated}">
+        <a href="/auth/login" class="login-button">Login to Purchase</a>
+    </th:block>
+</div>
+
+
+<div th:if="${param.errorMessage}" class="error-message">
+    <p>You don't have enough money to buy this product</p>
+</div>
 
 <footer>
     <p>© 2024 Online Shop. All rights reserved.</p>
