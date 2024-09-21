@@ -96,7 +96,7 @@
     <p><strong>Username:</strong> <span th:text="${person.getUsername()}">johndoe</span></p>
     <p><strong>Balance:</strong> <span th:text="${person.getBalance()}">0</span></p>
     <!-- Update profile form -->
-    <form th:action="@{/profile/update}" th:object="${person}" th:method="PUT">
+    <form th:action="@{/profile/update}" th:object="${person}" th:method="PATCH">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="" th:field="*{name}">
 

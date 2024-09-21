@@ -158,7 +158,7 @@
 
 <div>
     <th:block th:if="${isAuthenticated}">
-        <form th:action="@{/purchase/buy}" th:method="PUT">
+        <form th:action="@{/purchase/buy}" th:method="PATCH">
             <button type="submit" class="buy-button">Buy Now</button>
         </form>
     </th:block>

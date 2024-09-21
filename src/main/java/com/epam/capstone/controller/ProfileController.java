@@ -2,17 +2,15 @@ package com.epam.capstone.controller;
 
 import com.epam.capstone.model.Person;
 import com.epam.capstone.service.PeopleService;
-import jakarta.validation.Valid;
+import com.epam.capstone.utill.ValidationGroups;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/profile")
@@ -34,16 +32,21 @@ public class ProfileController {
         return "user/profile";
     }
 
-    @PutMapping("/update")
-    public String updateProfile(@ModelAttribute("person") @Valid Person person,
+    @PatchMapping("/update")
+    public String updateProfile(@ModelAttribute("person") @Validated(ValidationGroups.UpdateGroup.class) Person updatedPerson,
                                 BindingResult bindingResult) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Person person = peopleService.getPersonByUsername(authentication.getName()).get();
+
         if(bindingResult.hasErrors()) {
-            return "user/profile";
+            return "user/edit";
         }
 
-        peopleService.updatePerson(person);
+        peopleService.updatePerson(person, updatedPerson);
 
-        return "user/profile";
+
+        return "redirect:/profile";
 
     }
 

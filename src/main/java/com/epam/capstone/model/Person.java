@@ -1,5 +1,6 @@
 package com.epam.capstone.model;
 
+import com.epam.capstone.utill.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -21,25 +22,25 @@ public class Person {
     private Long id;
 
     @Column(name = "name")
-    @Size(min = 2, max = 200, message = "name must be between 2 and 200 symbols")
-    @NotEmpty(message = "name can not be empty")
+    @Size(min = 2, max = 200, message = "name must be between 2 and 200 symbols", groups = {ValidationGroups.CreateGroup.class, ValidationGroups.UpdateGroup.class})
+    @NotEmpty(message = "name can not be empty", groups = {ValidationGroups.CreateGroup.class, ValidationGroups.UpdateGroup.class})
     private String name;
 
     @Column(name = "surname")
-    @NotEmpty(message = "surname can not be empty")
+    @NotEmpty(message = "surname can not be empty", groups = {ValidationGroups.CreateGroup.class, ValidationGroups.UpdateGroup.class})
     private String surname;
 
     @Column(name = "email")
-    @Email
-    @NotEmpty(message = "email can not be empty")
+    @Email(groups = {ValidationGroups.CreateGroup.class, ValidationGroups.UpdateGroup.class})
+    @NotEmpty(message = "email can not be empty", groups = {ValidationGroups.CreateGroup.class, ValidationGroups.UpdateGroup.class})
     private String email;
 
     @Column(name = "username", unique = true)
-    @NotEmpty(message = "username can not be empty")
+    @NotEmpty(message = "username can not be empty", groups = {ValidationGroups.CreateGroup.class})
     private String username;
 
     @Column(name = "password")
-    @NotEmpty(message = "password can not be empty")
+    @NotEmpty(message = "password can not be empty", groups = {ValidationGroups.CreateGroup.class})
     private String password;
 
     @Column(name = "created_at")

@@ -7,8 +7,8 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/online-store
   jpa:
-    generate-ddl: true
     database: postgresql
+    show-sql: true
   mvc:
     hiddenmethod:
       filter:

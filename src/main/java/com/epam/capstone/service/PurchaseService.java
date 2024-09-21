@@ -33,7 +33,7 @@ public class PurchaseService {
             List<Item> itemsFromCart = cart.getItems().stream().map(CartItem::getItem).toList();
             itemsFromCart.forEach(x -> x.setPeople(List.of(person)));
 
-            peopleService.updatePerson(person);
+            peopleService.save(person);
             itemsFromCart.forEach(itemsService::updateItem);
         } else {
             throw new InsufficientFundsException();

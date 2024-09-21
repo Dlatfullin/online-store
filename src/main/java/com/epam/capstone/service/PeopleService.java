@@ -48,7 +48,16 @@ public class PeopleService {
     }
 
     @Transactional
-    public void updatePerson(Person person) {
+    public void updatePerson(Person person, Person updatedPerson) {
+        person.setName(updatedPerson.getName());
+        person.setSurname(updatedPerson.getSurname());
+        person.setEmail(updatedPerson.getEmail());
+
+        peopleRepository.save(person);
+    }
+
+    @Transactional
+    public void save(Person person) {
         peopleRepository.save(person);
     }
 }

@@ -3,10 +3,12 @@ package com.epam.capstone.controller;
 import com.epam.capstone.model.Person;
 import com.epam.capstone.service.RegistrationService;
 import com.epam.capstone.utill.PersonValidator;
+import com.epam.capstone.utill.ValidationGroups;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid Person person,
+    public String performRegistration(@ModelAttribute("person") @Validated(ValidationGroups.CreateGroup.class) Person person,
                                       BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
 
