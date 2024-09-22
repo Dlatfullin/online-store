@@ -23,11 +23,8 @@ public class Item {
     @Column(name = "price")
     private Double price;
 
-    @ManyToMany
-    @JoinTable(name = "Person_Item",
-    joinColumns = @JoinColumn(name = "item_id"),
-    inverseJoinColumns = @JoinColumn(name = "person_id"))
-    private List<Person> people = new ArrayList<>();
+    @OneToMany(mappedBy = "item")
+    private List<Purchase> purchases = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -68,14 +65,6 @@ public class Item {
         this.price = price;
     }
 
-    public List<Person> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<Person> people) {
-        this.people = people;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -84,8 +73,15 @@ public class Item {
         return title+".png";
     }
 
-
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
     }
 }

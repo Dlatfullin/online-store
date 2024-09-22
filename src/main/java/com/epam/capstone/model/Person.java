@@ -54,8 +54,8 @@ public class Person {
     @Column(name = "role")
     private String role;
 
-    @ManyToMany(mappedBy = "people")
-    private List<Item> items = new ArrayList<>();
+    @OneToMany(mappedBy = "person")
+    private List<Purchase> purchases = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -129,11 +129,11 @@ public class Person {
         this.role = role;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Purchase> getPurchases() {
+        return purchases;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setPurchases(List<Purchase> purchases) {
+        this.purchases = purchases;
     }
 }

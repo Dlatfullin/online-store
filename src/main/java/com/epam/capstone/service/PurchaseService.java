@@ -1,26 +1,30 @@
 package com.epam.capstone.service;
 
-import com.epam.capstone.model.Cart;
-import com.epam.capstone.model.CartItem;
-import com.epam.capstone.model.Item;
-import com.epam.capstone.model.Person;
+import com.epam.capstone.model.*;
+import com.epam.capstone.repository.ItemsRepository;
+import com.epam.capstone.repository.PeopleRepository;
+import com.epam.capstone.repository.PurchaseRepository;
 import com.epam.capstone.utill.InsufficientFundsException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class PurchaseService {
-    private final PeopleService peopleService;
-    private final ItemsService itemsService;
+    private final PurchaseRepository purchaseRepository;
+    private final PeopleRepository peopleRepository;
+    private final ItemsRepository itemsRepository;
 
     @Autowired
-    public PurchaseService(PeopleService peopleService, ItemsService itemsService) {
-        this.peopleService = peopleService;
-        this.itemsService = itemsService;
+    public PurchaseService(PurchaseRepository purchaseRepository, PeopleRepository peopleRepository, ItemsRepository itemsRepository) {
+        this.purchaseRepository = purchaseRepository;
+        this.peopleRepository = peopleRepository;
+        this.itemsRepository = itemsRepository;
     }
+
 
     @Transactional
     public void buy(Person person, Cart cart) {
@@ -28,15 +32,17 @@ public class PurchaseService {
 
         if(person.getBalance() >= totalCost) {
             person.setBalance(person.getBalance() - totalCost);
-            person.getItems().addAll(cart.getItems().stream().map(CartItem::getItem).toList());
 
-            List<Item> itemsFromCart = cart.getItems().stream().map(CartItem::getItem).toList();
-            itemsFromCart.forEach(x -> x.setPeople(List.of(person)));
+            List<Purchase> purchases = cart.getItems().stream().map(
+                    cartItem -> new Purchase(person, cartItem.getItem(), cartItem.getQuantity(), LocalDateTime.now())
+            ).toList();
 
-            peopleService.save(person);
-            itemsFromCart.forEach(itemsService::updateItem);
+            purchaseRepository.saveAll(purchases);
+            peopleRepository.save(person);
         } else {
             throw new InsufficientFundsException();
         }
     }
+
+
 }

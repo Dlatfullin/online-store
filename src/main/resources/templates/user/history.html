@@ -85,6 +85,7 @@
             <th>Product</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Date</th>
         </tr>
         </thead>
         <tbody>
@@ -92,6 +93,7 @@
             <td th:text="${item.getItem().getTitle()}">Product Name</td>
             <td th:text="${item.getQuantity()}">1</td>
             <td th:text="${item.getItem().getPrice() * item.getQuantity()}">$0.00</td>
+            <td th:text="${item.getPurchaseDate()}">20/09/2024</td>
         </tr>
         </tbody>
     </table>

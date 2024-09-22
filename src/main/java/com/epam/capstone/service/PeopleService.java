@@ -1,9 +1,6 @@
 package com.epam.capstone.service;
 
-import com.epam.capstone.model.Cart;
-import com.epam.capstone.model.CartItem;
-import com.epam.capstone.model.Item;
-import com.epam.capstone.model.Person;
+import com.epam.capstone.model.*;
 import com.epam.capstone.repository.PeopleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +26,8 @@ public class PeopleService {
         return peopleRepository.findById(id);
     }
 
-    // вопрос
-    @Transactional
-    public List<CartItem> getAllItems(Person person) {
-        List<Item> items = person.getItems();
-        Map<Item, Integer> itemCountMap = new HashMap<>();
-
-        for (Item item : items) {
-            itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + 1);
-        }
-
-        List<CartItem> cartItems = new ArrayList<>();
-        for (Map.Entry<Item, Integer> entry : itemCountMap.entrySet()) {
-            cartItems.add(new CartItem(entry.getKey(), entry.getValue()));
-        }
-
-        return cartItems;
+    public List<Purchase> getAllItems(Person person) {
+        return person.getPurchases();
     }
 
     @Transactional
