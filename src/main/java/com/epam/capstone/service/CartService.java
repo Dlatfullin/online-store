@@ -11,30 +11,27 @@ import java.util.List;
 @Service
 public class CartService {
 
-    private final Cart cart;
-
-    @Autowired
-    public CartService(Cart cart) {
-        this.cart = cart;
-    }
-
-    public void removeItems(Long itemId) {
+    public void removeItems(Long itemId, Cart cart) {
         cart.getItems().removeIf(item -> item.getItem().getId().equals(itemId));
     }
 
-    public Cart addItems(Item item, int quantity) {
+    public Cart addItems(Item item, int quantity, Cart cart) {
         List<CartItem> cartItems = cart.getItems();
-        if(cartItems.size() > 0) {
-            for (CartItem cartItem : cartItems) {
-                if (cartItem.getItem().getId().equals(item.getId())) {
-                    cartItem.setQuantity(cartItem.getQuantity() + quantity);
-                }
+        boolean itemExists = false;
+
+        for (CartItem cartItem : cartItems) {
+            if (cartItem.getItem().getId().equals(item.getId())) {
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                itemExists = true;
+                break;
             }
         }
 
-        cartItems.add(new CartItem(item, quantity));
-        cart.setItems(cartItems);
+        if (!itemExists) {
+            cartItems.add(new CartItem(item, quantity));
+        }
 
+        cart.setItems(cartItems);
         return cart;
     }
 }

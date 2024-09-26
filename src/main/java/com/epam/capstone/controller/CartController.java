@@ -20,25 +20,22 @@ public class CartController {
 
     private final CartService cartService;
     private final ItemsService itemsService;
+    private final Cart cart;
 
     @Autowired
-    public CartController(CartService cartService, ItemsService itemsService) {
+    public CartController(CartService cartService, ItemsService itemsService, Cart cart) {
         this.cartService = cartService;
         this.itemsService = itemsService;
+        this.cart = cart;
     }
 
     @GetMapping
-    public String viewCart(HttpSession session, Model model) {
+    public String viewCart(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken);
         model.addAttribute("isAuthenticated", isAuthenticated);
 
-        Cart cart = (Cart) session.getAttribute("cart");
-        if(cart == null) {
-            cart = new Cart();
-            session.setAttribute("cart", cart);
-        }
 
         model.addAttribute("cart", cart);
         model.addAttribute("total", cart.getItems().stream().mapToDouble(x -> x.getItem().getPrice() * x.getQuantity()).sum());
@@ -48,20 +45,19 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public String addCart(HttpSession session, @RequestParam("itemId") Long itemId,
+    public String addCart(@RequestParam("itemId") Long itemId,
                             @RequestParam("quantity") Integer quantity) {
         Item item = itemsService.getItemById(itemId);
-        session.setAttribute("cart", cartService.addItems(item, quantity));
+        cartService.addItems(item, quantity, cart);
 
         return "redirect:/store";
     }
 
 
     @DeleteMapping("/{id}")
-    public String deleteCart(HttpSession session, @PathVariable Long id) {
-        Cart cart = (Cart) session.getAttribute("cart");
+    public String deleteCart(@PathVariable Long id) {
         if(cart != null) {
-            cartService.removeItems(id);
+            cartService.removeItems(id, cart);
         }
 
         return "redirect:/cart";

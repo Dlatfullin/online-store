@@ -22,10 +22,6 @@ public class PeopleService {
         return peopleRepository.findByUsername(username);
     }
 
-    public Optional<Person> getPersonById(Long id) {
-        return peopleRepository.findById(id);
-    }
-
     public List<Purchase> getAllItems(Person person) {
         return person.getPurchases();
     }
@@ -36,11 +32,6 @@ public class PeopleService {
         person.setSurname(updatedPerson.getSurname());
         person.setEmail(updatedPerson.getEmail());
 
-        peopleRepository.save(person);
-    }
-
-    @Transactional
-    public void save(Person person) {
         peopleRepository.save(person);
     }
 }
