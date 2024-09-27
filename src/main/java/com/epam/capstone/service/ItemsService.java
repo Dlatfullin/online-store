@@ -29,4 +29,8 @@ public class ItemsService {
     public void updateItem(Item item) {
         itemsRepository.save(item);
     }
+
+    public List<Item> getSearch(String query) {
+        return itemsRepository.findByTitleContaining(query);
+    }
 }

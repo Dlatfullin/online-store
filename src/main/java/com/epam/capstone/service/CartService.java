@@ -3,7 +3,6 @@ package com.epam.capstone.service;
 import com.epam.capstone.model.Cart;
 import com.epam.capstone.model.CartItem;
 import com.epam.capstone.model.Item;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -3,7 +3,6 @@ package com.epam.capstone.model;
 import com.epam.capstone.utill.ValidationGroups;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;

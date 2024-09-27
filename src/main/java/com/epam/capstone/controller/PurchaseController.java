@@ -2,18 +2,15 @@ package com.epam.capstone.controller;
 
 import com.epam.capstone.model.Cart;
 import com.epam.capstone.model.Person;
-import com.epam.capstone.service.CartService;
 import com.epam.capstone.service.PeopleService;
 import com.epam.capstone.service.PurchaseService;
 import com.epam.capstone.utill.InsufficientFundsException;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

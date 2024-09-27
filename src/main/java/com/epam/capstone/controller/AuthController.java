@@ -4,7 +4,6 @@ import com.epam.capstone.model.Person;
 import com.epam.capstone.service.RegistrationService;
 import com.epam.capstone.utill.PersonValidator;
 import com.epam.capstone.utill.ValidationGroups;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

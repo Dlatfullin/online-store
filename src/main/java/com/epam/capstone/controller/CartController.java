@@ -2,10 +2,8 @@ package com.epam.capstone.controller;
 
 import com.epam.capstone.model.Cart;
 import com.epam.capstone.model.Item;
-import com.epam.capstone.model.Person;
 import com.epam.capstone.service.CartService;
 import com.epam.capstone.service.ItemsService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
