@@ -70,7 +70,7 @@ public class Item {
     }
 
     public String getImgUrl() {
-        return title+".png";
+        return this.title+".png";
     }
 
     public void setCategory(Category category) {
