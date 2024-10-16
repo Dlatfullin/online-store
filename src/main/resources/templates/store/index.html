@@ -53,6 +53,19 @@
         .cart-button:hover {
             background-color: #45a049;
         }
+        .logout-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        .logout-button:hover {
+            background-color: #e53935;
+        }
         .search-bar {
             margin: 30px 0;
             text-align: center;
@@ -89,8 +102,8 @@
             text-align: center;
             cursor: pointer;
             position: relative;
-            text-decoration: none; /* Убирает подчеркивание ссылки */
-            color: inherit; /* Убирает цвет текста ссылки */
+            text-decoration: none;
+            color: inherit;
         }
         .product-card img {
             width: 50px;
@@ -129,6 +142,18 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .add-item-button {
+            margin: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .add-item-button:hover {
+            background-color: #45a049;
+        }
         footer {
             margin-top: 40px;
             padding: 20px;
@@ -144,13 +169,12 @@
 <header>
     <h1>Welcome to Our Online Shop</h1>
     <div class="profile">
-        <!-- Если пользователь авторизован -->
         <div th:if="${isAuthenticated}">
             <p>Welcome, <strong th:text="${person.getName()}">User</strong></p>
             <span>Balance: <strong th:text="${person.getBalance()}">0.0</strong></span>
             <a href="/profile">Profile</a>
-            <form th:action="@{/logout}" th:method="POST">
-                <input type="submit" value="Logout"/>
+            <form th:action="@{/logout}" th:method="POST" style="display: inline;">
+                <input type="submit" value="Logout" class="logout-button"/>
             </form>
         </div>
         <div th:if="${!isAuthenticated}">
@@ -166,6 +190,11 @@
         <input type="text" name="query" placeholder="Search for products..." th:value="${query}">
         <input type="submit" value="Search">
     </form>
+</div>
+
+
+<div th:if="${isAdmin}">
+    <a href="/admin/add-item" class="add-item-button">Add New Item</a>
 </div>
 
 <div class="product-grid">

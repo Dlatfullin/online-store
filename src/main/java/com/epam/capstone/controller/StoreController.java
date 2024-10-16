@@ -29,7 +29,12 @@ public class StoreController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.isAuthenticated()
                 && !(authentication instanceof AnonymousAuthenticationToken);
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
 
+        System.out.println(isAdmin);
+
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("isAuthenticated", isAuthenticated);
 
         if(query != null) {
@@ -47,6 +52,11 @@ public class StoreController {
 
     @GetMapping("/{id}")
     public String getItem(@PathVariable long id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("item", itemsService.getItemById(id));
         return "store/item";
     }
